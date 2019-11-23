@@ -31,4 +31,4 @@ class MyClient(discord.Client):
         print('We starting nims bitches')
 
 client = MyClient()
-client.run('NjQ3NTkyMjI5MTI4NjM0MzY5.Xdh7WQ.WV3JqYPljdoKBWIr6MvvAyG4ufs')
+client.run('')
