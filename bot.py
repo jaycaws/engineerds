@@ -1,34 +1,44 @@
 import discord
-import 
 
 class MyClient(discord.Client):
     def __init__(self):
+        super().__init__();
         self.activeChannels = [
             {
-                id:"engineerds",
-                player:"*",
-                state:None
+                "id":630802065148608512,
+                "player":"*",
+                "state":None
             }
         ]
     async def on_ready(self):
         print('Logged on as {0}!'.format(self.user))
 
     async def on_message(self, message):
-        print(message.channel.id)
         for channel in self.activeChannels:
-            if message.channel.id == channel.id:
-                if channel.state == None:
-                    self.process_command(message)
+            if message.channel.id == channel["id"]:
+                if channel["state"] == None:
+                    await self.process_command(message)
                 else:
-                    self.startNims(message)
+                    await self.nims(channel)
+            else:
+                print("Cancelled")
+
 
     
 
-    async def process_command(message):
-        print('Message from {0.author}: {0.content}'.format(message))
+    async def process_command(self,message):
+        if message.content.split()[0] == "nims":
+            #Create NIMS Instance
+            #channel = self.create('cool-channel');
+            channel = "that one bitch";
 
-    async def startNims(message):
+            self.activeChannels.push({
+                "id":channel.id,
+                "player":message.author.name,
+                "state":Nims()
+            })
+    async def nims(self,channel):
         print('We starting nims bitches')
 
 client = MyClient()
-client.run('NjQ3NTkyMjI5MTI4NjM0MzY5.Xdh7WQ.WV3JqYPljdoKBWIr6MvvAyG4ufs')
+client.run('NjQ3NTkyMjI5MTI4NjM0MzY5.XdiPRA.7Ya0t7QLTw1KexhUnhjrtww2n2E')
