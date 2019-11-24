@@ -1,5 +1,7 @@
 import discord
 import nims
+import datetime
+
 
 class MyClient(discord.Client):
     def __init__(self):
@@ -18,32 +20,37 @@ class MyClient(discord.Client):
         for channel in self.activeChannels:
             if message.channel.id == channel["id"]:
                 if channel["state"] == None:
-                    await self.process_command(message)
+                    await self.process_command(channel,message)
                 else:
-                    #verify user id
-                    await self.nims(channel)
-            else:
-                print("Cancelled")
-
+                    if channel["player"] == message.author.id:
+                        await self.nims(channel)
+                    else:
+                        message.channel.send("You aint welcome")
+                        
 
     
 
-    async def process_command(self,message):
+    async def process_command(self,channel,message):
         if message.content.split()[0] == "nims":
-            #Create NIMS Instance
-            #channel = self.create('cool-channel');
-            channel = "that one bitch";
-
-            self.activeChannels.push({
-                "id":channel.id,
-                "player":message.author.name,
-                "state":Nims()
+            guild = message.guild
+            newChannel = await guild.create_text_channel('nims-' + message.author.name )
+            
+            self.activeChannels.append({
+                "channel":newChannel,
+                "player":message.author.id,
+                "state":nims.Nims()
             })
 
-            return nims.step();
-            
+            await newChannel.send(self.activeChannels[len(self.activeChannels)-1]["state"].step(None));
+
+
     async def nims(self,channel):
-        #retun channel.state.step(channel.messag);
+        channel["channel"].send(channel["state"].step(channel.message))
+        if channel.state.state is None:
+            channel.send("Removing session in 5 seconds...")
+            time.sleep(5)
+            self.activeChannels.remove(channel)
+            channel.channel.delete("We finished the game bitches")
 
 client = MyClient()
-client.run('NjQ3NTkyMjI5MTI4NjM0MzY5.Xdiaeg.bD4E30E9ZRRYp1H6C2oFqWzJjXc')
+client.run("NjQ3NTkyMjI5MTI4NjM0MzY5.XdoL9g.KwrFS29TFdoO4XCckvE-14ToNHo")
