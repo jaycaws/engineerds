@@ -1,4 +1,5 @@
 import discord
+import nims
 
 class MyClient(discord.Client):
     def __init__(self):
@@ -37,8 +38,11 @@ class MyClient(discord.Client):
                 "player":message.author.name,
                 "state":Nims()
             })
+
+            return nims.step();
+            
     async def nims(self,channel):
-        print('We starting nims bitches')
+        #retun channel.state.step(channel.messag);
 
 client = MyClient()
-client.run('NjQ3NTkyMjI5MTI4NjM0MzY5.XdiPRA.7Ya0t7QLTw1KexhUnhjrtww2n2E')
+client.run('NjQ3NTkyMjI5MTI4NjM0MzY5.Xdiaeg.bD4E30E9ZRRYp1H6C2oFqWzJjXc')
