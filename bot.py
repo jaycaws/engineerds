@@ -20,6 +20,7 @@ class MyClient(discord.Client):
                 if channel["state"] == None:
                     await self.process_command(message)
                 else:
+                    #verify user id
                     await self.nims(channel)
             else:
                 print("Cancelled")
