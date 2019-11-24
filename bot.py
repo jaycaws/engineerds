@@ -52,12 +52,14 @@ class MyClient(discord.Client):
             self.activeChannels.remove(channel)
             channel.channel.delete("We finished the game bitches")
 
-with open('keys.json', 'r') as myfile:
+with open('./keys.json', 'r') as myfile:
     data=myfile.read()
 
 # parse file
 keys = json.loads(data)
 
+token = keys["token"]
 
-client = MyClient(keys["token"])
-client.run("NjQ3NTkyMjI5MTI4NjM0MzY5.XdoL9g.KwrFS29TFdoO4XCckvE-14ToNHo")
+
+client = MyClient()
+client.run(token)
