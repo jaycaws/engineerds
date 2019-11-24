@@ -1,7 +1,7 @@
 import discord
 import nims
 import datetime
-
+import json
 
 class MyClient(discord.Client):
     def __init__(self):
@@ -52,5 +52,12 @@ class MyClient(discord.Client):
             self.activeChannels.remove(channel)
             channel.channel.delete("We finished the game bitches")
 
-client = MyClient()
+with open('keys.json', 'r') as myfile:
+    data=myfile.read()
+
+# parse file
+keys = json.loads(data)
+
+
+client = MyClient(keys["token"])
 client.run("NjQ3NTkyMjI5MTI4NjM0MzY5.XdoL9g.KwrFS29TFdoO4XCckvE-14ToNHo")
