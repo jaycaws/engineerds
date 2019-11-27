@@ -8,6 +8,7 @@ class MyClient(discord.Client):
         super().__init__();
         self.activeChannels = [
             {
+                "channel": None,
                 "id":630802065148608512,
                 "player":"*",
                 "state":None
@@ -23,10 +24,9 @@ class MyClient(discord.Client):
                     await self.process_command(channel,message)
                 else:
                     if channel["player"] == message.author.id:
-                        await self.nims(channel)
+                        await self.nims(channel,message)
                     else:
-                        message.channel.send("You aint welcome")
-                        
+                        pass                        
 
     
 
@@ -37,6 +37,7 @@ class MyClient(discord.Client):
             
             self.activeChannels.append({
                 "channel":newChannel,
+                "id":newChannel.id,
                 "player":message.author.id,
                 "state":nims.Nims()
             })
@@ -44,13 +45,13 @@ class MyClient(discord.Client):
             await newChannel.send(self.activeChannels[len(self.activeChannels)-1]["state"].step(None));
 
 
-    async def nims(self,channel):
-        channel["channel"].send(channel["state"].step(channel.message))
-        if channel.state.state is None:
-            channel.send("Removing session in 5 seconds...")
+    async def nims(self,channel,message):
+        await channel["channel"].send(channel["state"].step(message.content))
+        if channel["state"] is None:
+            await channel.send("Removing session in 5 seconds...")
             time.sleep(5)
             self.activeChannels.remove(channel)
-            channel.channel.delete("We finished the game bitches")
+            await channel["channel"].delete("We finished the game bitches")
 
 with open('./keys.json', 'r') as myfile:
     data=myfile.read()

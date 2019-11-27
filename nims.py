@@ -18,14 +18,14 @@ class Nims:
                 else:
                     self.state = 0
                     self.marbles -= pmove
-                    moveLog = "Remaining: " + self.marbles + "\n"
+                    moveLog = "Remaining: " + str(self.marbles) + "\n"
                     if self.marbles <= 0:
                         self.state = None
                         return moveLog + "you win!"
                         #BREAK DIS SHIT
                     else:
                         cmove = random.randint(1, 3)
-                        moveLog += "The computer takes: "+ cmove + "\n"
+                        moveLog += "The computer takes: "+ str(cmove) + "\n"
                         self.marbles -= cmove
                         if self.marbles <= 0:
                             #end
@@ -33,7 +33,7 @@ class Nims:
                             return moveLog + "Computer wins!"
                             #BREAK DIS SHIT
                         else:
-                            moveLog += "Remaining: " + marbles + "\n"
+                            moveLog += "Remaining: " + str(self.marbles) + "\n"
                             state = 0; 
                             return moveLog + self.step(None)
             
